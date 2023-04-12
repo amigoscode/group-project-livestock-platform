@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Swagger Petstore - OpenAPI 3.0
   description: "Livestock exchange platform "
-    
+
   termsOfService: http://swagger.io/terms/
   contact:
     email: apiteam@swagger.io
@@ -14,7 +14,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: scheme://host[:port][/path]
+  - url: https://server/api/v1
 tags:
   - name: user
   - name: order
@@ -24,7 +24,7 @@ paths:
       tags:
         - user
       summary: get a list of users.
-      description: get alist of users.
+      description: get a list of users.
       operationId: listUsers
       responses:
         '200':
@@ -136,7 +136,7 @@ paths:
       tags:
         - order
       summary: get a list of orders.
-      description: get alist of orders.
+      description: get a list of orders.
       operationId: listOrders
       responses:
         '200':
@@ -245,7 +245,7 @@ paths:
       tags:
         - product
       summary: get a list of products.
-      description: get alist of products.
+      description: get a list of products.
       operationId: listProducts
       responses:
         '200':
@@ -354,8 +354,8 @@ paths:
       tags:
         - delivery
       summary: get a list of deliveries.
-      description: get alist of deliveries.
-      operationId: listDeliverys
+      description: get a list of deliveries.
+      operationId: listDeliveries
       responses:
         '200':
           description: successful operation
@@ -463,7 +463,7 @@ paths:
       tags:
         - cart
       summary: get a list of carts.
-      description: get alist of carts.
+      description: get a list of carts.
       operationId: listCarts
       responses:
         '200':
@@ -572,7 +572,7 @@ paths:
       tags:
         - transaction
       summary: get a list of transactions.
-      description: get alist of transactions.
+      description: get a list of transactions.
       operationId: listTransactions
       responses:
         '200':
@@ -814,16 +814,3 @@ components:
             - sold
       xml:
         name: pet
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
