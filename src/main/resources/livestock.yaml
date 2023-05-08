@@ -3,16 +3,16 @@ info:
   title: Swagger Petstore - OpenAPI 3.0
   description: "Livestock exchange platform "
 
-  termsOfService: http://swagger.io/terms/
+  termsOfService: https://swagger.io/terms/
   contact:
     email: apiteam@swagger.io
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: "1.0"
 externalDocs:
   description: Find out more about Swagger
-  url: http://swagger.io
+  url: https://swagger.io
 servers:
   - url: https://server/api/v1
 tags:
@@ -56,7 +56,7 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
       responses:
-        default:
+        '201':
           description: successful operation
           content:
             application/json:
@@ -403,7 +403,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Delivery'
       responses:
-        default:
+        '201':
           description: successful operation
           content:
             application/json:
@@ -421,7 +421,8 @@ paths:
           description: name that need to be updated
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       requestBody:
         description: Update an existent delivery in database
         content:
@@ -429,6 +430,16 @@ paths:
             schema:
               $ref: '#/components/schemas/Delivery'
       responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+        '400':
+          description: Invalid order Id supplied
+        '404':
+          description: Delivery not found
         default:
           description: successful operation
     delete:
@@ -442,8 +453,11 @@ paths:
           description: The delivery that needs to be deleted
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
+        '204':
+          description: Delivery deleted
         '400':
           description: Invalid delivery Id supplied
         '404':
@@ -457,10 +471,11 @@ paths:
       parameters:
         - name: deliveryId
           in: path
-          description: User ID
+          description: Delivery ID
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -753,20 +768,23 @@ components:
     Delivery:
       type: object
       properties:
-        street:
-          type: string
-          example: 437 Lytton
-        city:
-          type: string
-          example: Palo Alto
-        state:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        order_id:
+          type: integer
+          format: int64
+          example: 12345
+        tracking_number:
           type: string
           example: CA
-        zip:
+        status:
           type: string
-          example: '94301'
-      xml:
-        name: address
+          example: 'done'
+          enum:
+            - pending
+            - done
     Transaction:
       type: object
       properties:
