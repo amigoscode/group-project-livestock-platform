@@ -15,7 +15,6 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-
     private final UserDao userDao;
 
     @Autowired
@@ -32,7 +31,6 @@ public class UserService {
         Optional<User> user = this.listUsers().stream().filter(u -> id == u.getId().intValue()).findFirst();
         return user;
     }
-
 
     @Transactional
     public User createUser(User user) {
@@ -56,8 +54,6 @@ public class UserService {
     public void deleteUser(Integer id) {
         userDao.deleteById(id);
     }
-
-
 
     private User buildUserModel(UsersEntity usersEntity) {
         Gson gson = new Gson();

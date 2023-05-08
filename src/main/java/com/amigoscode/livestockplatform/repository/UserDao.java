@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface UserDao extends JpaRepository<UsersEntity, Integer> {
 
-
 }
