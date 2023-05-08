@@ -18,15 +18,12 @@ import java.util.NoSuchElementException;
 public class Handler {
 
     Logger logger = LoggerFactory.getLogger(Handler.class);
+
     @ExceptionHandler(NoSuchElementException.class)
     @ResponseBody
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public final ResponseEntity<ErrorMessage> handleNotFound(
-            NoSuchElementException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.NOT_FOUND.value(),
-                new Date(),
-                ex.getMessage(),
+    public final ResponseEntity<ErrorMessage> handleNotFound(NoSuchElementException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), ex.getMessage(),
                 request.getDescription(false));
         logger.error(ex.getMessage());
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
@@ -35,16 +32,11 @@ public class Handler {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseBody
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public final ResponseEntity<ErrorMessage> handleIllegalArgument(
-            IllegalArgumentException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.BAD_REQUEST.value(),
-                new Date(),
-                ex.getMessage(),
+    public final ResponseEntity<ErrorMessage> handleIllegalArgument(IllegalArgumentException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), new Date(), ex.getMessage(),
                 request.getDescription(false));
         logger.error(ex.getMessage());
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
-
 
 }

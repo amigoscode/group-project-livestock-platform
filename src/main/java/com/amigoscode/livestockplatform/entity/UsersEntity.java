@@ -157,14 +157,23 @@ public class UsersEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         UsersEntity that = (UsersEntity) o;
-        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(streetName, that.streetName) && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(country, that.country) && Objects.equals(emailAddress, that.emailAddress) && Objects.equals(deliveryAddress, that.deliveryAddress) && Objects.equals(billingAddress, that.billingAddress) && Objects.equals(userType, that.userType);
+        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName)
+                && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(streetName, that.streetName)
+                && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city)
+                && Objects.equals(state, that.state) && Objects.equals(country, that.country)
+                && Objects.equals(emailAddress, that.emailAddress)
+                && Objects.equals(deliveryAddress, that.deliveryAddress)
+                && Objects.equals(billingAddress, that.billingAddress) && Objects.equals(userType, that.userType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, phoneNumber, streetName, postalCode, city, state, country, emailAddress, deliveryAddress, billingAddress, userType);
+        return Objects.hash(id, firstName, lastName, phoneNumber, streetName, postalCode, city, state, country,
+                emailAddress, deliveryAddress, billingAddress, userType);
     }
 }

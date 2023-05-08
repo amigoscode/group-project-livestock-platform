@@ -39,7 +39,7 @@ public class UserController implements UsersApi {
         if (userOptional.isEmpty()) {
             throw new IllegalArgumentException("No user with id " + userId + " found.");
         }
-            return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
 
     }
 
@@ -50,16 +50,16 @@ public class UserController implements UsersApi {
 
     public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId, @Valid @RequestBody User user) {
         Optional<User> userOptional = userService.getUser(userId);
-        if( userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             throw new IllegalArgumentException("No user with id " + userId + " found.");
         }
         User updatedUser = userService.updateUser(userId, user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> deleteUser(@PathVariable("userId") Integer userId){
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") Integer userId) {
         int status = getUser(userId).getStatusCode().value();
-        if(HttpStatus.NOT_FOUND.value() == status ) {
+        if (HttpStatus.NOT_FOUND.value() == status) {
             throw new IllegalArgumentException("The id user: " + userId + " does not exist.");
         }
         userService.deleteUser(userId);
