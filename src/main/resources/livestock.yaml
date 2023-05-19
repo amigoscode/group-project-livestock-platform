@@ -312,7 +312,8 @@ paths:
           description: name that need to be updated
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       requestBody:
         description: Update an existent product in database
         content:
@@ -320,6 +321,16 @@ paths:
             schema:
               $ref: '#/components/schemas/Product'
       responses:
+        '200':
+          description: Product Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid product Id supplied
+        '404':
+          description: Product not found
         default:
           description: successful operation
     delete:
@@ -333,7 +344,8 @@ paths:
           description: The product that needs to be deleted
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         '400':
           description: Invalid product Id supplied
@@ -352,6 +364,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -578,6 +591,8 @@ paths:
             type: integer
             format: int64
       responses:
+        '204':
+          description: Cart deleted
         '400':
           description: Invalid cart Id supplied
         '404':
@@ -695,6 +710,8 @@ paths:
           schema:
             type: integer
       responses:
+        '204':
+          description: Transaction deleted
         '400':
           description: Invalid transaction Id supplied
         '404':
@@ -903,21 +920,33 @@ components:
           type: integer
           format: int64
           example: 10
-        name:
+        title:
           type: string
           example: doggie
-        photoUrls:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            type: string
-            xml:
-              name: photoUrl
-        status:
+        description:
           type: string
-          description: pet status in the store
-          enum:
-            - available
-            - pending
-            - sold
+          example: doggie
+        category:
+          type: string
+          example: doggie
+        stock:
+          type: integer
+          format: int64
+          example: 10
+        price:
+          type: number
+          example: 10.5
+        weight:
+          type: number
+        age:
+          type: number
+          example: 2
+        date_of_processing:
+          type: string
+          format: date-time
+        processing_status:
+          type: string
+        seller_id:
+          type: integer
+          format: int64
+          example: 10
