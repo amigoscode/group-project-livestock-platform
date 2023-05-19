@@ -36,7 +36,7 @@ public class DeliveryController implements DeliveriesApi {
     public ResponseEntity<Delivery> getDelivery(@PathVariable("deliveryId") Long deliveryId) {
         Optional<Delivery> userOptional = deliveryService.getDelivery(deliveryId);
         if (userOptional.isEmpty()) {
-            throw new IllegalArgumentException("No user with id " + deliveryId + " found.");
+            throw new IllegalArgumentException("No delivery with id " + deliveryId + " found.");
         }
         return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
 
@@ -51,7 +51,7 @@ public class DeliveryController implements DeliveriesApi {
             @Valid @RequestBody Delivery order) {
         Optional<Delivery> userOptional = deliveryService.getDelivery(deliveryId);
         if (userOptional.isEmpty()) {
-            throw new IllegalArgumentException("No user with id " + deliveryId + " found.");
+            throw new IllegalArgumentException("No delivery with id " + deliveryId + " found.");
         }
         Delivery updatedDelivery = deliveryService.updateDelivery(deliveryId, order);
         return new ResponseEntity<>(updatedDelivery, HttpStatus.OK);
@@ -60,7 +60,7 @@ public class DeliveryController implements DeliveriesApi {
     public ResponseEntity<Void> deleteDelivery(@PathVariable("deliveryId") Long deliveryId) {
         int status = getDelivery(deliveryId).getStatusCode().value();
         if (HttpStatus.NOT_FOUND.value() == status) {
-            throw new IllegalArgumentException("The id user: " + deliveryId + " does not exist.");
+            throw new IllegalArgumentException("The id delivery: " + deliveryId + " does not exist.");
         }
         deliveryService.deleteDelivery(deliveryId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

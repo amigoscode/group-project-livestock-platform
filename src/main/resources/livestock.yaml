@@ -654,7 +654,7 @@ paths:
           description: name that need to be updated
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         description: Update an existent transaction in database
         content:
@@ -662,8 +662,16 @@ paths:
             schema:
               $ref: '#/components/schemas/Transaction'
       responses:
-        default:
+        '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '400':
+          description: Invalid user Id supplied
+        '404':
+          description: Transaction not found
     delete:
       tags:
         - transaction
@@ -675,7 +683,7 @@ paths:
           description: The transaction that needs to be deleted
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '400':
           description: Invalid transaction Id supplied
@@ -690,7 +698,7 @@ paths:
       parameters:
         - name: transactionId
           in: path
-          description: User ID
+          description: Transaction ID
           required: true
           schema:
             type: integer
@@ -788,20 +796,17 @@ components:
     Transaction:
       type: object
       properties:
-        street:
+        id:
+          type: integer
+        order_id:
+          type: integer
+          format: int64
+        transaction_code:
           type: string
-          example: 437 Lytton
-        city:
+          example: '176-987-KJB'
+        date_of_transaction:
           type: string
-          example: Palo Alto
-        state:
-          type: string
-          example: CA
-        zip:
-          type: string
-          example: '94301'
-      xml:
-        name: address
+          format: date-time
     User:
       type: object
       properties:
@@ -897,5 +902,3 @@ components:
             - available
             - pending
             - sold
-      xml:
-        name: pet
