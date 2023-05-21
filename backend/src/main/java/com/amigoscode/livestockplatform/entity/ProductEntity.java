@@ -32,13 +32,13 @@ public class ProductEntity {
     private Integer stock;
     @Basic
     @Column(name = "price", nullable = true)
-    private Integer price;
+    private Double price;
     @Basic
     @Column(name = "weight", nullable = true)
-    private Integer weight;
+    private Double weight;
     @Basic
     @Column(name = "age", nullable = true)
-    private Integer age;
+    private Double age;
     @Basic
     @Column(name = "date_of_processing", nullable = true)
     private Date dateOfProcessing;
@@ -89,27 +89,27 @@ public class ProductEntity {
         this.stock = stock;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Integer getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public Integer getAge() {
+    public Double getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(Double age) {
         this.age = age;
     }
 

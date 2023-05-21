@@ -943,7 +943,6 @@ components:
           example: 2
         date_of_processing:
           type: string
-          format: date-time
         processing_status:
           type: string
         seller_id:
