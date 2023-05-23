@@ -11,20 +11,24 @@ import { ProductService } from './product/product.service';
 import { TableModule } from 'primeng/table';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { HomeComponent } from './home/home.component';
+import { ButtonModule } from 'primeng/button';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
     NavBarComponent,
-    HomeComponent
+    HomeComponent,
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     TableModule,
-    TabMenuModule
+    TabMenuModule,
+    ButtonModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
