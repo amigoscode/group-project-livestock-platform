@@ -19,6 +19,25 @@ tags:
   - name: user
   - name: order
 paths:
+  /auth/signup:
+    post:
+      tags:
+        - user
+      operationId: registerUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+
   /users:
     get:
       tags:
@@ -911,9 +930,6 @@ components:
           type: string
           description: cart status in the store
     Product:
-      required:
-        - name
-        - photoUrls
       type: object
       properties:
         id:
@@ -949,3 +965,36 @@ components:
           type: integer
           format: int64
           example: 10
+    Account:
+      required:
+        - username
+        - email
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+          example: user123
+        email:
+          type: string
+          example: mail@mail.ma
+        password:
+          type: string
+          example: p@s$123*
+        role:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+        user:
+          $ref: '#/components/schemas/User'
+    Role:
+        type: string
+        enum:
+          - ROLE_USER
+          - ROLE_ADMIN
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
