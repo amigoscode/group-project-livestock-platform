@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Swagger Petstore - OpenAPI 3.0
-  description: "Livestock exchange platform "
+  title: Swagger Livestock exchange platform - OpenAPI 3.0
+  description: "Livestock exchange platform"
 
   termsOfService: https://swagger.io/terms/
   contact:
@@ -25,7 +25,8 @@ paths:
         - user
       operationId: registerUser
       requestBody:
-        description: Created user object
+        required: true
+        description: User object to be authenticated
         content:
           application/json:
             schema:
@@ -37,6 +38,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
+  /auth/signin:
+    post:
+      tags:
+        - user
+      operationId: authenticateUser
+      requestBody:
+        description: User account object to be registered
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtResponse'
 
   /users:
     get:
@@ -972,6 +992,9 @@ components:
         - password
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         username:
           type: string
           example: user123
@@ -981,7 +1004,7 @@ components:
         password:
           type: string
           example: p@s$123*
-        role:
+        roles:
           type: array
           items:
             $ref: '#/components/schemas/Role'
@@ -997,4 +1020,21 @@ components:
       properties:
         message:
           type: string
+    JwtResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        type:
+          type: string
+        id:
+          type: int
+        username:
+          type: string
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
 

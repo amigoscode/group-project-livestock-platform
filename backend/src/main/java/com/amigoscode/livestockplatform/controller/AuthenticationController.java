@@ -3,7 +3,10 @@ package com.amigoscode.livestockplatform.controller;
 
 import com.amigoscode.livestockplatform.entity.AccountEntity;
 import com.amigoscode.livestockplatform.repository.AccountDao;
+import com.amigoscode.livestockplatform.response.JwtResponse;
 import com.amigoscode.livestockplatform.response.MessageResponse;
+import com.amigoscode.livestockplatform.response.services.UserDetailsImpl;
+import com.amigoscode.livestockplatform.security.jwt.JwtUtils;
 import com.amigoscode.livestockplatform.service.UserService;
 import com.amigoscodelivestock_platform.api.AuthApi;
 import com.amigoscodelivestock_platform.model.Account;
@@ -12,9 +15,12 @@ import com.amigoscodelivestock_platform.model.User;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +29,11 @@ import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("${openapi.swaggerPetstoreOpenAPI30.base-path:/api/v1}")
-public class SignUpController implements AuthApi {
+public class AuthenticationController implements AuthApi {
 
     @Autowired
     AccountDao accountDao;
@@ -34,7 +41,14 @@ public class SignUpController implements AuthApi {
     @Autowired
     UserService userService;
 
-    PasswordEncoder encoder = new BCryptPasswordEncoder();
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JwtUtils jwtUtils;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     public ResponseEntity<com.amigoscodelivestock_platform.model.MessageResponse> registerUser(
             @Valid @RequestBody Account account) {
@@ -50,7 +64,7 @@ public class SignUpController implements AuthApi {
         // Create new user's account
         AccountEntity accountEntity = new AccountEntity();
 
-        List<Role> strRoles = account.getRole();
+        List<Role> strRoles = account.getRoles();
         Set<String> roles = new HashSet<>();
 
         if (strRoles == null) {
@@ -63,11 +77,11 @@ public class SignUpController implements AuthApi {
 
                     break;
                 case "ROLE_USER":
-                    roles.add(Role.ADMIN.getValue());
+                    roles.add(Role.USER.getValue());
 
                     break;
                 default:
-                    throw new RuntimeException("User role "+ role +" not valid");
+                    throw new RuntimeException("User role " + role + " not valid");
                 }
             });
         }
@@ -80,5 +94,21 @@ public class SignUpController implements AuthApi {
         accountDao.save(accountEntity);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    public ResponseEntity<com.amigoscodelivestock_platform.model.JwtResponse> authenticateUser(
+            @Valid @RequestBody Account account) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(
+                new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
     }
 }
