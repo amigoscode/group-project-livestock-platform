@@ -1,7 +1,6 @@
 FROM eclipse-temurin:17-jdk-jammy
 
 MAINTAINER moeB
-WORKDIR backend
-RUN ls
-COPY target/*.jar app.jar
+WORKDIR backend/target
+COPY livestock-platform-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["bash","start-app.sh"]
