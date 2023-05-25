@@ -3,10 +3,10 @@ package com.amigoscode.livestockplatform.controller;
 import com.amigoscode.livestockplatform.service.UserService;
 import com.amigoscodelivestock_platform.api.UsersApi;
 import com.amigoscodelivestock_platform.model.User;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("${openapi.swaggerPetstoreOpenAPI30.base-path:/api/v1}")
+@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 public class UserController implements UsersApi {
 
     private final UserService userService;
