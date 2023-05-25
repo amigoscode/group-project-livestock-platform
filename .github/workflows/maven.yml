@@ -35,6 +35,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: ls -alh
+    - run: |
+        cd backend
+        ls -alh
     - name: Build the Docker image
       run: docker build . --file backend/Dockerfile --tag livestock-platform-backend:$(date +%s)
