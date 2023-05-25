@@ -45,9 +45,9 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: my-artifact
-    working-directory: backend/target
     - name: Display structure of downloaded files
       run: ls -R
+      working-directory: backend/target
     - uses: actions/checkout@v3
     - run: |
         cd backend
