@@ -52,9 +52,5 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R
       working-directory: backend/target
-    # - uses: actions/checkout@v3
-    # - run: |
-    #     cd backend
-    #     ls -alh
-    # - name: Build the Docker image
-    #   run: docker build . --file backend/Dockerfile --tag livestock-platform-backend:$(date +%s)
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag livestock-platform-backend:$(date +%s)
