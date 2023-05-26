@@ -38,16 +38,20 @@ jobs:
   docker-image:
     needs: build
     runs-on: ubuntu-latest
+    env:
+      working-directory:
 
     steps:
     - uses: actions/checkout@v3
-
+    - name: create target directory
+      run: mkdir -p target
     - uses: actions/download-artifact@v3
       with:
         name: my-artifact
+        path: backend/target
     - name: Display structure of downloaded files
       run: ls -R
-    #   working-directory: backend/target
+      working-directory: backend/target
     # - uses: actions/checkout@v3
     # - run: |
     #     cd backend
