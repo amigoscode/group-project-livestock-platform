@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AccountService } from './account/account.service';
+import { Account } from './account/account';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +10,14 @@ import { MenuItem } from 'primeng/api';
 })
 export class AppComponent {
   title = 'frontend';
+  user?: Account | null;
 
   items: MenuItem[] | undefined;
   activeItem: MenuItem | undefined;
+
+  constructor(private accountService: AccountService) {
+    this.accountService.user.subscribe(x => this.user = x);
+}
 
     ngOnInit() {
         this.items = [
@@ -25,4 +32,8 @@ export class AppComponent {
     onActiveItemChange(event: MenuItem | undefined){
       this.activeItem = event;
   }
+  logout() {
+    this.accountService.logout();
+}
+
 }

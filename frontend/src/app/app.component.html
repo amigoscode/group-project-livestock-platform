@@ -1,4 +1,10 @@
 <div class="card">
   <p-tabMenu [model]="items" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
+  <div class="navbar-nav">
+    <a class="nav-item nav-link" routerLink="/" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}">Home</a>
+    <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active">Users</a>
+    <button class="btn btn-link nav-item nav-link" (click)="logout()">Logout</button>
+  </div>
 </div>
 <router-outlet></router-outlet>

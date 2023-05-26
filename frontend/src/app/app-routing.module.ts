@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductComponent } from './product/product.component';
+import { AuthGuard } from './auth.guard';
 import { HomeComponent } from './home/home.component';
-import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { ProductComponent } from './product/product.component';
+
+const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 
 const routes: Routes = [
-  { path: 'products', component: ProductComponent },
-  { path: 'home', component: HomeComponent },
-  { path: '', component: HomeComponent },
-  { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
-  
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'products', component: ProductComponent, canActivate: [AuthGuard] },
+  // { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] },
+  { path: 'account', loadChildren: accountModule },
+
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

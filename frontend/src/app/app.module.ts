@@ -13,6 +13,10 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { HomeComponent } from './home/home.component';
 import { ButtonModule } from 'primeng/button';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { LoginComponent } from './account/login/login.component';
+import { AccountComponent } from './account/account.component';
+import { LayoutComponent } from './account/layout.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     ProductComponent,
     NavBarComponent,
     HomeComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    LoginComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +34,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     AppRoutingModule,
     TableModule,
     TabMenuModule,
-    ButtonModule
+    ButtonModule,
+    ReactiveFormsModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
