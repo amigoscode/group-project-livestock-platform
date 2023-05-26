@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: my-artifact
-        path: backend/target/
+        path: backend/target
         retention-days: 5
   docker-image:
     needs: build
@@ -47,10 +47,10 @@ jobs:
         name: my-artifact
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: backend/target
-    - uses: actions/checkout@v3
-    - run: |
-        cd backend
-        ls -alh
-    - name: Build the Docker image
-      run: docker build . --file backend/Dockerfile --tag livestock-platform-backend:$(date +%s)
+    #   working-directory: backend/target
+    # - uses: actions/checkout@v3
+    # - run: |
+    #     cd backend
+    #     ls -alh
+    # - name: Build the Docker image
+    #   run: docker build . --file backend/Dockerfile --tag livestock-platform-backend:$(date +%s)
